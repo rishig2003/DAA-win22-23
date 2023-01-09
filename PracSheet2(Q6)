@@ -1,0 +1,85 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+void merge(int nums[],int last_digits[],int l,int mid,int h){
+    int i=l;
+    
+    int j=mid+1;
+    
+    int k=l;
+    
+    int B[h+1];
+    int vec[h+1];
+    
+    
+    while(i<=mid && j<=h){
+        if(last_digits[i]>last_digits[j]){
+            B[k]=last_digits[i];
+            vec[k]=nums[i];
+            i+=1;
+            k+=1;
+        }
+        else{
+            B[k]=last_digits[j];
+            vec[k]=nums[j];
+            j+=1;
+            k+=1;
+        }
+    }
+    
+    while(i<=mid){
+        B[k]=last_digits[i];
+        vec[k]=nums[i];
+        i+=1;
+        k+=1;
+    }
+    while(j<=h){
+        B[k]=last_digits[j];
+        vec[k]=nums[j];
+        j+=1;
+        k+=1;
+    }
+    
+    for(int i=l;i<=h;i++){
+        last_digits[i]=B[i];
+        nums[i]=vec[i];
+    }
+    
+}
+
+void merge_sort(int nums[],int last_digits[],int l,int h){
+    int mid;
+    if(l<h){
+        mid=(l+h)/2;
+        merge_sort(nums,last_digits,l,mid);
+        merge_sort(nums,last_digits,mid+1,h);
+        merge(nums,last_digits,l,mid,h);
+    }
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    
+    int nums[n];
+    int last_digits[n];
+    
+    for(int i=0;i<n;i++){
+        int x;
+        cin>>x;
+        nums[i]=x;
+    }
+    
+    for(int i=0;i<n;i++){
+        last_digits[i]=nums[i]%10;
+    }
+    
+    merge_sort(nums,last_digits,0,n-1);
+    
+    for(int i=0;i<n;i++){
+        cout<<nums[i]<<' ';
+    }
+    
+}
