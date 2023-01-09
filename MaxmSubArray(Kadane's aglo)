@@ -1,0 +1,27 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+int main(){
+    int n;
+    vector<int> vec;
+    cin>>n;
+    
+    for(int i=0;i<n;i++){
+        int x;
+        cin>>x;
+        vec.push_back(x);
+    }
+    
+    int ans=INT_MIN;
+    int curMax=0;
+    
+    for(int i=0;i<n;i++){
+        curMax+=vec[i];
+        if(curMax>ans) ans=curMax;
+        if(curMax<0) curMax=0;
+    }
+    
+    cout<<ans<<endl;
+    
+}
