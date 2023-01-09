@@ -1,0 +1,92 @@
+#include <iostream>
+#include <unordered_map>
+#include <string>
+#include <vector>
+using namespace std;
+
+void merge(string words[],int values[],int l,int mid,int h){
+    int i=l;
+    int j=mid+1;
+    int k=l;
+    int B[h+1];
+    string vec[h+1];
+    
+    
+    while(i<=mid && j<=h){
+        if(values[i]>values[j]){
+            B[k]=values[i];
+            vec[k]=words[i];
+            i+=1;
+            k+=1;
+        }
+        else{
+            B[k]=values[j];
+            vec[k]=words[j];
+            j+=1;
+            k+=1;
+        }
+    }
+    
+    while(i<=mid){
+        B[k]=values[i];
+        vec[k]=words[i];
+        i+=1;
+        k+=1;
+    }
+    while(j<=h){
+        B[k]=values[j];
+        vec[k]=words[j];
+        j+=1;
+        k+=1;
+    }
+    
+    for(int i=l;i<=h;i++){
+        values[i]=B[i];
+        words[i]=vec[i];
+    }
+    
+}
+
+void merge_sort(string words[],int values[],int l,int h){
+    int mid;
+    if(l<h){
+        mid=(l+h)/2;
+        merge_sort(words,values,l,mid);
+        merge_sort(words,values,mid+1,h);
+        merge(words,values,l,mid,h);
+    }
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    string words[n];
+    for(int i=0;i<n;i++){
+        string word;
+        cin>>word;
+        words[i]=word;
+    }
+    
+    
+    int values[n];
+    int i=0;
+    for(auto word:words){
+        int sum=0;
+        for(auto x:word){
+            sum+=(int(x)-97+1);
+        }
+        values[i]=sum;
+        i++;
+        
+    }
+    
+    merge_sort(words,values,0,n-1);
+    
+    for(int i=0;i<n;i++){
+        cout<<words[i]<<" ";
+    }
+    
+    
+    
+}
