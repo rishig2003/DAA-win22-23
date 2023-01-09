@@ -1,0 +1,43 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+int find_maxSum(vector<int> vec,int l,int h){
+    if(h<=l) return vec[l];
+    
+    int leftSum=INT_MIN;
+    int sum=0;
+    
+    int mid=(h+l)/2;
+    
+    for(int i=mid;i>=l;i--){
+        sum+=vec[i];
+        if(sum>leftSum) leftSum=sum;
+    }
+    int rightSum=INT_MIN;
+    sum=0;
+    
+    for(int i=mid+1;i<=h;i++){
+        sum+=vec[i];
+        if(sum>rightSum) rightSum=sum;
+    }
+    
+    int max_left_right=max(find_maxSum(vec,l,mid),find_maxSum(vec,mid+1,h));
+    return max(max_left_right,leftSum+rightSum);
+    
+    
+}
+
+int main()
+{
+    int n;
+    cin>>n;
+    vector<int> vec;
+    for(int i=0;i<n;i++){
+        int x;
+        cin>>x;
+        vec.push_back(x);
+    }
+    cout<<find_maxSum(vec,0,n-1);
+    
+}
