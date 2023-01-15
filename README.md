@@ -1,2 +1,3 @@
 # DAA-win22-23
-DSA codes from the entire semester
+DSA codes for the DAA course.
+Assignments, practice sheets etc.
