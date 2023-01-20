@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int Max(vector<int> &vec,int l,int r){
+    int maxm=0;
+    
+    if(l==r) maxm=vec[l];
+    
+    else if(l==r-1){
+        if(vec[l]>vec[r]) maxm=vec[l];
+        else maxm=vec[r];
+    }
+    
+    else{
+        int mid=l+(r-l)/2;
+        int a=Max(vec,l,mid);
+        int b=Max(vec,mid+1,r);
+        if(a>b) maxm=a;
+        else maxm=b;
+    }
+    return maxm;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    vector<int> vec;
+    
+    for(int i=0;i<n;i++){
+        int x;
+        cin>>x;
+        vec.push_back(x);
+    }
+    
+    cout<<Max(vec,0,n-1)<<endl;
+
+    return 0;
+}
